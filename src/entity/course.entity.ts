@@ -5,7 +5,7 @@ import { User_entity } from './user.entity';
 export class Course_entity{
 
     @Column()
-    @PrimaryGeneratedColumn('uuid')
+    @PrimaryGeneratedColumn('increment')
     id : string;
 
     @Column()
@@ -22,7 +22,7 @@ export class Course_entity{
 
     @ManyToOne(() => User_entity,(user)=>user.id ,{onDelete:'CASCADE'}) 
     @JoinColumn({name:'user'})
-    user: User_entity;
+    user: User_entity[];
 
     @Column()
     category : string
@@ -34,5 +34,5 @@ export class Course_entity{
 
 
     @OneToMany(()=> Course_entity, (course)=>course.id)
-    course : Course_entity;
+    course : Course_entity[];
 }

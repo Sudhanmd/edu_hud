@@ -1,10 +1,11 @@
+import { isEmpty } from "rxjs";
 import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Course_entity } from "./course.entity";
+import { isString } from "util";
 
 @Entity()
 export class User_entity{
     @Column()
-    @PrimaryGeneratedColumn('uuid')
+    @PrimaryGeneratedColumn('increment')
     id:string
 
     @Column()
@@ -28,5 +29,6 @@ export class User_entity{
     image : string
     
     @OneToMany(() => User_entity, user=>(user.id))
-    user :User_entity
+    user :User_entity[];
 }
+
