@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Course_entity } from "./course.entity";
 
 @Entity()
 export class User_entity{
@@ -12,7 +13,9 @@ export class User_entity{
     @Column()
     password: string
 
-    @Column({type:'enum'})
+    @Column({
+        type:'enum',
+        enum : ['EDUCATOR', 'STUDENT'] })
     role: string
 
     @Column({unique:true})
@@ -23,5 +26,7 @@ export class User_entity{
 
     @Column()
     image : string
-
+    
+    @OneToMany(() => User_entity, user=>(user.id))
+    user :User_entity
 }
