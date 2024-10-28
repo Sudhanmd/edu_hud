@@ -6,7 +6,7 @@ import { Course_entity } from "./course.entity";
 export class Enrollment_entity{
 
     @Column()
-    @PrimaryGeneratedColumn('increment')
+    @PrimaryGeneratedColumn('uuid')
     id :string;
 
     @ManyToOne(()=> User_entity, user => user.id, {onDelete:"CASCADE"})

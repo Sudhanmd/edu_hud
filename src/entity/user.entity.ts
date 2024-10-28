@@ -5,8 +5,8 @@ import { isString } from "util";
 @Entity()
 export class User_entity{
     @Column()
-    @PrimaryGeneratedColumn('increment')
-    id:string
+    @PrimaryGeneratedColumn('uuid')
+    id: string
 
     @Column()
     name :string

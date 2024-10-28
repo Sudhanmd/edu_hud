@@ -5,7 +5,7 @@ import { User_entity } from './user.entity';
 export class Course_entity{
 
     @Column()
-    @PrimaryGeneratedColumn('increment')
+    @PrimaryGeneratedColumn('uuid')
     id : string;
 
     @Column()
