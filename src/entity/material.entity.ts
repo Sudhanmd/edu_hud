@@ -21,7 +21,7 @@ export class Material_Entity{
     @Column()
     url :string
 
-    @CreateDateColumn()
+    @CreateDateColumn({type:'timestamp without time zone'})
     date : Date;
 
     @Column()
