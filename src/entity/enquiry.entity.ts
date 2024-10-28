@@ -6,7 +6,7 @@ import { Course_entity } from "./course.entity";
 @Entity()
 export class Enquiry_entity{
 
-    @Column()
+
     @PrimaryGeneratedColumn('uuid')
     id : string
 

@@ -1,14 +1,15 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Course_entity } from "./course.entity";
 import { Url } from "url";
 
 @Entity()
 export class Material_Entity{
-    @Column()
+  
     @PrimaryGeneratedColumn('uuid')
     id : string
 
-    @ManyToOne(()=> Course_entity, (course)=>course.id)
+    @ManyToOne(()=> Course_entity, course => course.id , {onDelete:"CASCADE"})
+    @JoinColumn ({name:'course'})
     course : Course_entity[];
 
     @Column()
@@ -18,11 +19,10 @@ export class Material_Entity{
     description : string;
 
     @Column()
-    url ?: Url
+    url :string
 
-    @CreateDateColumn(
-        {type:'timestamp without time zone'})
-        date : Date;
+    @CreateDateColumn()
+    date : Date;
 
     @Column()
     contentType : string;

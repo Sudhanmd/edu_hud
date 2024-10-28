@@ -23,8 +23,7 @@ export class Enrollment_entity{
 
     @Column(
     {type:'enum',
-    enum: ['ACCEPTED','REJECTED'],
-    default:'PENDING' })
-    status : string
-}
-
+    enum: ['ACCEPTED','REJECTED', 'PENDING']
+    , default: 'PENDING'})
+    status : 'ACCEPTED' | 'REJECTED' |'PENDING'  
+    }

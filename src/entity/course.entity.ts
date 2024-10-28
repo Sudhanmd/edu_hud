@@ -1,4 +1,4 @@
-import {Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import { User_entity } from './user.entity';
 
 @Entity()
@@ -25,7 +25,7 @@ export class Course_entity{
     user: User_entity[];
 
     @Column()
-    category : string
+    category : string;
 
     @Column({
         type :'enum',

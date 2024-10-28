@@ -1,6 +1,5 @@
-import { isEmpty } from "rxjs";
-import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { isString } from "util";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+
 
 @Entity()
 export class User_entity{
@@ -14,9 +13,7 @@ export class User_entity{
     @Column()
     password: string
 
-    @Column({
-        type:'enum',
-        enum : ['EDUCATOR', 'STUDENT'] })
+    @Column({type:'enum', enum : ['EDUCATOR', 'STUDENT'] })
     role: string
 
     @Column({unique:true})
