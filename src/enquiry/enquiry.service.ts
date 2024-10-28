@@ -18,6 +18,7 @@ async  createEnquiry(body: Enquiry_entity) {
             catch (error) {
                 throw new BadRequestException(error.message || error);
             }} 
+            
  async  getAllEnquiries() {try {
         const getall = await this.enrollementRepository.find()
         if(!getall) throw new NotFoundException(`No Enquiries Found`)
