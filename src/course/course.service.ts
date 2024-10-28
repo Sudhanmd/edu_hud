@@ -12,7 +12,7 @@ export class CourseService {
       ) {} 
       
 //creating the course
-   async createcourse(body: Course_entity) {
+   async createcourse(body:updateCourseDto) {
     try {
     const createuser = await this.courseRepository.save(body)
     return{success:true, message:createuser}
@@ -36,7 +36,7 @@ export class CourseService {
 //get course by courseId
   async  getCourseById(id: string) {
         try {
-            const getcourse = await this.courseRepository.find({where:{id}})
+            const getcourse = await this.courseRepository.find({where:{id:id}})
         if(!getcourse) throw new NotFoundException(`given ${id} is not found`)
         return getcourse;
         } 
