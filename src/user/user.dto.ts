@@ -28,18 +28,17 @@ export class UserDto{
 }
 
 export class Update_user{
-
   @IsOptional()
   @IsString()
-  name: string;
+  name ?: string;
 
   @IsOptional()
   @IsPhoneNumber()
-  mobileNumber :string;
+  mobileNumber ?:string;
 
   @IsOptional()
   @IsString()
-  image : string;
+  image ?: string;
 }
 
 
