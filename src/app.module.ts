@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CourseModule } from './course/course.module';
 import { EnrollementModule } from './enrollement/enrollement.module';
 import { MaterialModule } from './material/material.module';
+import { EnquiryModule } from './enquiry/enquiry.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { MaterialModule } from './material/material.module';
   CourseModule,
   EnrollementModule,
   MaterialModule,
+  EnquiryModule,
 ], controllers: [],
   providers: [],
 })

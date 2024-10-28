@@ -1,7 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { EnrollementService } from './enrollement.service';
 import { Enrollment_entity } from 'src/entity/enrollment.entity';
-import { updateCourseDto } from 'src/entity/course.entity';
 import { enrollementDto } from './enrollement.dto';
 
 @Controller('enrollement')

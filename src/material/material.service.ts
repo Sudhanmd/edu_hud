@@ -3,13 +3,11 @@ import { MaterialDto } from './material.dto';
 import { Material_Entity } from 'src/entity/material.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Course_entity } from 'src/entity/course.entity';
 
 @Injectable()
 export class MaterialService {
     
-
-    constructor(
+constructor(
         @InjectRepository(Material_Entity)
         private readonly materialRpository: Repository<Material_Entity>,
       ){}
@@ -57,7 +55,6 @@ async getByCourseId(id:string){
         throw new BadRequestException(error.message || error);
     }
 }
-
 
 async  updateMaterialById(id: string, body: MaterialDto) {
         try {
