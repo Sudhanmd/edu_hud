@@ -9,11 +9,11 @@ export class Enrollment_entity{
     @PrimaryGeneratedColumn('uuid')
     id :string;
 
-    @ManyToOne(()=> User_entity, user => user.id, {onDelete:"CASCADE"})
+    @ManyToOne(()=> User_entity, user => user.enrollmentRefUser, {onDelete:"CASCADE"})
     @JoinColumn({name:'user'})
     user : User_entity[];
 
-    @ManyToOne(()=> Course_entity, course => course.id , {onDelete:"CASCADE"})
+    @ManyToOne(()=> Course_entity, course => course.enrollmentRefCourse, {onDelete:"CASCADE"})
     @JoinColumn ({name:'course'})
     course : Course_entity[];
 

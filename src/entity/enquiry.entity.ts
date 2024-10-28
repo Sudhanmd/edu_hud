@@ -6,15 +6,15 @@ import { Course_entity } from "./course.entity";
 @Entity()
 export class Enquiry_entity{
 
-
+    @Column()
     @PrimaryGeneratedColumn('uuid')
     id : string
 
-    @ManyToOne(() => User_entity,(user)=>user.id ,{onDelete:'CASCADE'}) 
+    @ManyToOne(() => User_entity,(user)=>user.enquiryRefUser ,{onDelete:'CASCADE'}) 
     @JoinColumn({name:'user'})
     user: User_entity[];
 
-    @ManyToOne(()=> Course_entity, course => course.id , {onDelete:"CASCADE"})
+    @ManyToOne(()=> Course_entity, course => course.enquiryRefCourse, {onDelete:"CASCADE"})
     @JoinColumn ({name:'course'})
     course : Course_entity[];
 

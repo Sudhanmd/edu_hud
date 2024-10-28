@@ -1,4 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Course_entity } from "./course.entity";
+import { Enrollment_entity } from "./enrollment.entity";
+import { Enquiry_entity } from "./enquiry.entity";
 
 
 @Entity()
@@ -13,7 +16,8 @@ export class User_entity{
     @Column()
     password: string
 
-    @Column({type:'enum', enum : ['EDUCATOR', 'STUDENT'] })
+    @Column({
+type:'enum', enum : ['EDUCATOR', 'STUDENT'] })
     role: string
 
     @Column({unique:true})
@@ -25,7 +29,15 @@ export class User_entity{
     @Column()
     image : string
     
-    @OneToMany(() => User_entity, user=>(user.id))
-    user :User_entity[];
+    @OneToMany(() => Course_entity, (courseEntity) => courseEntity.user)
+    courseRefUser :Course_entity[];
+
+    @OneToMany(() => Enrollment_entity,(enrollmentEntities) => enrollmentEntities.user)
+    enrollmentRefUser : Enrollment_entity[];
+
+    @OneToMany(() => Enquiry_entity,(enrollmententities) => enrollmententities.user)
+    enquiryRefUser : Enquiry_entity[];
+
+    
 }
 
