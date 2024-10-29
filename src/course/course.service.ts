@@ -29,7 +29,6 @@ export class CourseService {
   async getAllCourse() {
     try {
       const getcourse = await this.courseRepository.find();
-      if (!getcourse) throw new NotFoundException(`No course Found`);
       return getcourse;
     } catch (error) {
       throw new BadRequestException(error.message || error);
