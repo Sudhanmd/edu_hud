@@ -20,7 +20,12 @@ export class EnrollementController {
     return await this.enrollementServices.createEnrollement(body);
   }
 
-  @Get('getAllEnrollment')
+  @Get('getEnrolledCourseByUserId/:userId')
+  async getEnrollCourseByUserId(@Param('userId') user: string) {
+    return await this.enrollementServices.getEnrollCourseByUserId(user);
+  }
+
+  @Get('getAllEnrolls')
   async getAllEnrollment() {
     return await this.enrollementServices.getAllEnrollment();
   }

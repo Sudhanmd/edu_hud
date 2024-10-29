@@ -23,6 +23,19 @@ export class EnrollementService {
       throw new BadRequestException(error.message || error);
     }
   }
+  async getEnrollCourseByUserId(user: string) {
+    try {
+      const checkUserId = await this.enrollementRepository.findOne({
+        where: { user: { id: user } },
+        relations: ['course'],
+      });
+      if (!checkUserId)
+        throw new NotFoundException(`The given UserId is ${user} not found`);
+      return checkUserId;
+    } catch (error) {
+      throw new BadRequestException(error.message || error);
+    }
+  }
 
   async getAllEnrollment() {
     try {
