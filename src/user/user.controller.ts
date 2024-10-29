@@ -27,17 +27,17 @@ export class UserController {
   }
 
   @Get('getUserByUserId/:UserId')
-  async getUserById(@Param('id') id: string) {
+  async getUserById(@Param('UserId') id: string) {
     return await this.usermodel.getUserById(id);
   }
 
   @Put('updateUserByUserId/:UserId')
-  async updateUserById(@Param('id') id: string, @Body() body: Update_user) {
+  async updateUserById(@Param('UserId') id: string, @Body() body: Update_user) {
     return await this.usermodel.updateUserById(id, body);
   }
 
   @Delete('deleteUserByUserId/:UserId')
-  async deleteUser(@Param('Id') id: string) {
+  async deleteUser(@Param('UserId') id: string) {
     return await this.usermodel.deleteUser(id);
   }
 }
