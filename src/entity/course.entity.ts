@@ -10,6 +10,7 @@ import { User_entity } from './user.entity';
 import { Enrollment_entity } from './enrollment.entity';
 import { Enquiry_entity } from './enquiry.entity';
 import { Material_Entity } from './material.entity';
+import { IsOptional } from 'class-validator';
 
 @Entity()
 export class Course_entity {
@@ -44,9 +45,6 @@ export class Course_entity {
   })
   level: string;
 
-  // @OneToMany(() => Enquiry_entity,(enrollmententities) => enrollmententities.user)
-  // enquiryRefUser : Enquiry_entity[];
-
   @OneToMany(
     () => Enrollment_entity,
     (enrollmententity) => enrollmententity.course,
@@ -57,22 +55,27 @@ export class Course_entity {
   enquiryRefCourse: Enquiry_entity[];
 
   @OneToMany(() => Material_Entity, (materialEntity) => materialEntity.course)
-  materialRefEntity: Enrollment_entity[];
+  materialRefEntity: Material_Entity[];
 }
 
 export class updateCourseDto {
+  @IsOptional()
   @Column()
   title: string;
 
+  @IsOptional()
   @Column()
   description: string;
 
+  @IsOptional()
   @Column()
   startDate: Date;
 
+  @IsOptional()
   @Column()
   endDate: Date;
 
+  @IsOptional()
   @Column()
   category: string;
 }
