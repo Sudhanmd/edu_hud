@@ -16,8 +16,8 @@ export class Material_Entity {
   @ManyToOne(() => Course_entity, (course) => course.materialRefEntity, {
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'course' })
-  course: Course_entity[];
+  @JoinColumn({ name: 'course_id' })
+  course: Course_entity;
 
   @Column()
   title: string;
