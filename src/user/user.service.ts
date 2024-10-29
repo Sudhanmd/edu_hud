@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User_entity } from 'src/entity/user.entity';
 import { Repository } from 'typeorm';
 import { Update_user, UserDto } from './user.dto';
+import { kStringMaxLength } from 'buffer';
+import { loadEnvFile } from 'process';
 
 
 @Injectable()
@@ -30,15 +32,16 @@ async createUser(body: UserDto)
   
 }
 
-    async getAllUser(){
-        try {
-            const getusers = await this.userRepository.find()
-            if(!getusers) throw new NotFoundException(`no users Found please Insert`)
-            return getusers;
-        } catch (error) {
-            throw new BadRequestException(error.message || error)
-        }
+async getAllStudents()
+{
+  try {
+    const getusers = await this.userRepository.find({where:{role:'STUDENT'}})
+    if(!getusers) throw new NotFoundException(`No "STUDENT" Found please Insert`)
+      return getusers;
+    } catch (error) {
+      throw new BadRequestException(error.message || error)
     }
+  }
 
     async getUserById(id:string){
         try {
@@ -65,9 +68,8 @@ async createUser(body: UserDto)
             throw new BadRequestException(error.message || error)
           }
       }
-      
 
-    async deleteUser(id:string){
+      async deleteUser(id:string){
         try {
             const deleteUser = await this.userRepository.delete(id)
             if(deleteUser.affected === 0){
@@ -77,6 +79,6 @@ async createUser(body: UserDto)
         } catch (error) {
             throw new BadRequestException(error.message || error)}
           }
-        
-}
+        }
 
+        

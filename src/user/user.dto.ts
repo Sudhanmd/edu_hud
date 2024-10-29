@@ -1,44 +1,48 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsPhoneNumber, IsString } from "class-validator";
+import {
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsPhoneNumber,
+  IsString,
+} from 'class-validator';
 
-export class UserDto{
-
+export class UserDto {
   @IsNotEmpty()
   @IsString()
   name: string;
 
   @IsNotEmpty()
   @IsString()
-  password :string;
+  password: string;
 
   @IsNotEmpty()
   @IsEnum(['EDUCATOR', 'STUDENT'])
-  role:'EDUCATOR'|'STUDENT';
+  role: 'EDUCATOR' | 'STUDENT';
 
   @IsNotEmpty()
   @IsEmail()
-  email :string;
+  email: string;
 
   @IsNotEmpty()
   @IsPhoneNumber()
-  mobileNumber :string;
+  mobileNumber: string;
 
   @IsNotEmpty()
   @IsString()
-  image : string;
+  image: string;
 }
 
-export class Update_user{
+export class Update_user {
   @IsOptional()
   @IsString()
-  name ?: string;
+  name?: string;
 
   @IsOptional()
   @IsPhoneNumber()
-  mobileNumber ?:string;
+  mobileNumber?: string;
 
   @IsOptional()
   @IsString()
-  image ?: string;
+  image?: string;
 }
-
-
