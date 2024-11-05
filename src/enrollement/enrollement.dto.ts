@@ -1,9 +1,17 @@
-import { IsEnum, IsNotEmpty } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class enrollementDto {
   @IsNotEmpty()
   @IsEnum(['ACCEPTED', 'REJECTED', 'PENDING'], {
     message: 'this fied should be, ACCEPTED | REJECTED | PENDING',
   })
-  status: 'ACCEPTED' | 'REJECTED' | 'PENDING' = 'PENDING';
+  status: string;
+}
+
+export class UpdateEnrollDto {
+  @IsOptional()
+  @IsEnum(['ACCEPTED', 'REJECTED', 'PENDING'], {
+    message: 'this fied should be, ACCEPTED | REJECTED | PENDING',
+  })
+  status: string;
 }

@@ -34,7 +34,7 @@ export class Course_entity {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'user' })
-  user: User_entity[];
+  user: User_entity; // remove array type
 
   @Column()
   category: string;
@@ -58,24 +58,24 @@ export class Course_entity {
   materialRefEntity: Material_Entity[];
 }
 
-export class updateCourseDto {
-  @IsOptional()
-  @Column()
-  title: string;
+// export class updateCourseDto {
+//   @IsOptional()
+//   @Column()
+//   title: string;
 
-  @IsOptional()
-  @Column()
-  description: string;
+//   @IsOptional()
+//   @Column()
+//   description: string;
 
-  @IsOptional()
-  @Column()
-  startDate: Date;
+//   @IsOptional()
+//   @Column()
+//   startDate: Date;
 
-  @IsOptional()
-  @Column()
-  endDate: Date;
+//   @IsOptional()
+//   @Column()
+//   endDate: Date;
 
-  @IsOptional()
-  @Column()
-  category: string;
-}
+//   @IsOptional()
+//   @Column()
+//   category: string;
+// }

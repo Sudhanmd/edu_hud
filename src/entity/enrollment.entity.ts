@@ -35,5 +35,5 @@ export class Enrollment_entity {
     enum: ['ACCEPTED', 'REJECTED', 'PENDING'],
     default: 'PENDING',
   })
-  status: 'ACCEPTED' | 'REJECTED' | 'PENDING';
+  status: string;
 }

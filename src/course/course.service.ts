@@ -36,21 +36,34 @@ export class CourseService {
   }
 
   //get course by courseId
-  async getCourseById(givenid: string) {
+  async getCourseById(id: string) {
     try {
-      const getcourse = await this.courseRepository.findOneBy({ id: givenid });
-      if (!getcourse)
-        throw new NotFoundException(`given ${givenid} is not found`);
+      const getcourse = await this.courseRepository.find({ where: { id } });
+      if (!getcourse) throw new NotFoundException(`given ${id} is not found`);
       return getcourse;
     } catch (error) {
       throw new BadRequestException(error.message || error);
     }
   }
 
+  //get course by userId
+  async getCourseByUserId(id: string) {
+    try {
+      const getcourse = await this.courseRepository.find({
+        where: { user: { id } },
+        relations: ['user'],
+      });
+      return { success: true, message: getcourse };
+    } catch (error) {
+      throw new BadRequestException(error.message || error);
+    }
+  }
+
+  //update course by courseId
   async updateCourseById(id: string, body: updateCourseDto) {
     try {
-      const checkCourseID = await this.courseRepository.findOne({
-        where: { id: id },
+      const checkCourseID = await this.courseRepository.find({
+        where: { id },
       });
       if (!checkCourseID)
         throw new NotFoundException(`given ${id} is not found`);
@@ -61,6 +74,7 @@ export class CourseService {
     }
   }
 
+  //delete course by courseId
   async deleteCourse(id: string) {
     try {
       const deleteCourse = await this.courseRepository.delete(id);

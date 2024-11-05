@@ -6,7 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Enrollment_entity } from 'src/entity/enrollment.entity';
 import { Repository } from 'typeorm';
-import { enrollementDto } from './enrollement.dto';
+import { enrollementDto, UpdateEnrollDto } from './enrollement.dto';
 
 @Injectable()
 export class EnrollementService {
@@ -17,6 +17,7 @@ export class EnrollementService {
 
   async createEnrollement(body: enrollementDto) {
     try {
+      body['status'] = body.status.toUpperCase();
       const create = await this.enrollementRepository.save(body);
       return { success: true, message: create };
     } catch (error) {
@@ -31,17 +32,18 @@ export class EnrollementService {
       });
       if (!checkUserId)
         throw new NotFoundException(`The given UserId is ${user} not found`);
-      return checkUserId;
+      return { success: true, Message: checkUserId };
     } catch (error) {
       throw new BadRequestException(error.message || error);
     }
   }
 
-  async getAllEnrollment() {
+  async getAll() {
     try {
-      const getall = await this.enrollementRepository.find();
-      if (!getall) throw new NotFoundException(`No Enrollment Found`);
-      return getall;
+      const getAllEnroll = await this.enrollementRepository.find({
+        relations: ['user', 'course'],
+      });
+      return { success: true, Message: getAllEnroll };
     } catch (error) {
       throw new BadRequestException(error.message || error);
     }
@@ -49,22 +51,23 @@ export class EnrollementService {
 
   async getEnrollmentById(id: string) {
     try {
-      const getByid = await this.enrollementRepository.find({ where: { id } });
+      const getByid = await this.enrollementRepository.find({
+        where: { id },
+        relations: ['user', 'course'],
+      });
       if (!getByid) throw new NotFoundException(`given ${id} is not found`);
-      return getByid;
+      return { success: true, message: getByid };
     } catch (error) {
       throw new BadRequestException(error.message || error);
     }
   }
 
-  async updateEnrollmentById(id: string, body: Enrollment_entity) {
+  async updateEnrollmentById(id: string, body: UpdateEnrollDto) {
     try {
-      const checkID = await this.enrollementRepository.findOne({
-        where: { id: id },
-      });
-      if (!checkID) throw new NotFoundException(`given ${id} is not found`);
-      const updatebody = await this.enrollementRepository.update(id, body);
-      return { success: true, message: updatebody };
+      const getByid = await this.enrollementRepository.find({ where: { id } });
+      if (!getByid) throw new NotFoundException(`given ${id} is not found`);
+      const update = await this.enrollementRepository.update(id, body);
+      return { success: true, message: update };
     } catch (error) {
       throw new BadRequestException(error.message || error);
     }
@@ -76,7 +79,7 @@ export class EnrollementService {
       if (checkId.affected === 0) {
         throw new NotFoundException(`Given ${id} is not found`);
       }
-      return { message: `${id} is deleted successfully` };
+      return { sucess: true, message: `${id} is deleted successfully` };
     } catch (error) {
       throw new BadRequestException(error.message || error);
     }

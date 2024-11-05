@@ -17,8 +17,10 @@ export class UserDto {
   password: string;
 
   @IsNotEmpty()
-  @IsEnum(['EDUCATOR', 'STUDENT'])
-  role: 'EDUCATOR' | 'STUDENT';
+  @IsEnum(['EDUCATOR', 'STUDENT'], {
+    message: 'role must be EDUCATOR , STUDENT',
+  })
+  role: string;
 
   @IsNotEmpty()
   @IsEmail()
@@ -33,7 +35,7 @@ export class UserDto {
   image: string;
 }
 
-export class Update_user {
+export class UpdateUser {
   @IsOptional()
   @IsString()
   name?: string;

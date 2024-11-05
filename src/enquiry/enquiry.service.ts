@@ -26,8 +26,7 @@ export class EnquiryService {
   async getAllEnquiries() {
     try {
       const getall = await this.enrollementRepository.find();
-      if (!getall) throw new NotFoundException(`No Enquiries Found`);
-      return getall;
+      return { message: getall };
     } catch (error) {
       throw new BadRequestException(error.message || error);
     }
@@ -45,7 +44,7 @@ export class EnquiryService {
   async updateAllEnquriesById(id: string, body: Enquiry_entity) {
     try {
       const checkID = await this.enrollementRepository.findOne({
-        where: { id: id },
+        where: { id },
       });
       if (!checkID) throw new NotFoundException(`given ${id} is not found`);
       const updatebody = await this.enrollementRepository.update(id, body);

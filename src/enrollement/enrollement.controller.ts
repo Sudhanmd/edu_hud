@@ -9,13 +9,13 @@ import {
 } from '@nestjs/common';
 import { EnrollementService } from './enrollement.service';
 import { Enrollment_entity } from 'src/entity/enrollment.entity';
-import { enrollementDto } from './enrollement.dto';
+import { enrollementDto, UpdateEnrollDto } from './enrollement.dto';
 
-@Controller('enrollement')
+@Controller('enroll')
 export class EnrollementController {
   constructor(private readonly enrollementServices: EnrollementService) {}
 
-  @Post('addenrollement')
+  @Post('addEnroll')
   async createEnrollement(@Body() body: enrollementDto) {
     return await this.enrollementServices.createEnrollement(body);
   }
@@ -26,25 +26,25 @@ export class EnrollementController {
   }
 
   @Get('getAllEnrolls')
-  async getAllEnrollment() {
-    return await this.enrollementServices.getAllEnrollment();
+  async getAll() {
+    return await this.enrollementServices.getAll();
   }
 
-  @Get()
-  async getEnrollmentById(@Param('id') id: string) {
+  @Get('getEnrollById/:enrollID')
+  async getEnrollmentById(@Param('enrollID') id: string) {
     return await this.enrollementServices.getEnrollmentById(id);
   }
 
-  @Put()
+  @Put('updateEnrollByEnrollID/:enrollID')
   async updateEnrollmentByID(
-    @Param('id') id: string,
-    @Body() body: Enrollment_entity,
+    @Param('enrollID') id: string,
+    @Body() body: UpdateEnrollDto,
   ) {
     return await this.enrollementServices.updateEnrollmentById(id, body);
   }
 
-  @Delete()
-  async deleteEnrollmentById(@Param('Id') id: string) {
+  @Delete('deleteEnrollByEnrollID/:enrollID')
+  async deleteEnrollmentById(@Param('enrollID') id: string) {
     return await this.enrollementServices.deleteEnrollmentById(id);
   }
 }

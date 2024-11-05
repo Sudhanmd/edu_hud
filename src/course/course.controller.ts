@@ -9,14 +9,15 @@ import {
 } from '@nestjs/common';
 import { Course_entity } from 'src/entity/course.entity';
 import { CourseService } from './course.service';
-import { updateCourseDto } from './course.dto';
+import { CourseDto, updateCourseDto } from './course.dto';
 
 @Controller('course')
 export class CourseController {
   constructor(private readonly courseModel: CourseService) {}
 
   @Post('addCourse')
-  async createcourser(@Body() body: Course_entity) {
+  async createcourse(@Body() body: CourseDto) {
+    // change entity to dto & get rel id in param
     return await this.courseModel.createcourse(body);
   }
 
@@ -28,6 +29,12 @@ export class CourseController {
   @Get('getCourseByCourseId/:Id')
   async getCourseById(@Param('Id') id: string) {
     return await this.courseModel.getCourseById(id);
+  }
+
+  // get course by userId
+  @Get('getCourseByUserId/:userId')
+  async getCourseByUserId(@Param('userId') id: string) {
+    return await this.courseModel.getCourseByUserId(id);
   }
 
   @Put('updateCourseByCourseId/:courseId')
