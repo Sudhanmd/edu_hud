@@ -7,7 +7,6 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { Course_entity } from 'src/entity/course.entity';
 import { CourseService } from './course.service';
 import { CourseDto, updateCourseDto } from './course.dto';
 
@@ -16,9 +15,9 @@ export class CourseController {
   constructor(private readonly courseModel: CourseService) {}
 
   @Post('addCourse')
-  async createcourse(@Body() body: CourseDto) {
+  async createCourse(@Body() body: CourseDto) {
     // change entity to dto & get rel id in param
-    return await this.courseModel.createcourse(body);
+    return await this.courseModel.createCourse(body);
   }
 
   @Get('getAllCourses')
