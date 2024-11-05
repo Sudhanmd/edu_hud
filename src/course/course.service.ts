@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Course_entity } from 'src/entity/course.entity';
+import { Course_entity } from '../entity/course.entity';
 import { Repository } from 'typeorm';
 import { updateCourseDto } from './course.dto';
 
@@ -16,7 +16,7 @@ export class CourseService {
   ) {}
 
   //creating the course
-  async createcourse(body: updateCourseDto) {
+  async createCourse(body: updateCourseDto) {
     try {
       const createuser = await this.courseRepository.save(body);
       return { success: true, message: createuser };
@@ -68,7 +68,7 @@ export class CourseService {
       if (!checkCourseID)
         throw new NotFoundException(`given ${id} is not found`);
       const updateCouseId = await this.courseRepository.update(id, body);
-      return { success: true, message: updateCouseId };
+      return { success: true, message: 'successfully updated' };
     } catch (error) {
       throw new BadRequestException(error.message || error);
     }
