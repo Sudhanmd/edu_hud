@@ -4,10 +4,10 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { MaterialDto, UPdateMaterialDto } from './material.dto';
-import { Material_Entity } from 'src/entity/material.entity';
+import { Material_Entity } from '../entity/material.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Course_entity } from 'src/entity/course.entity';
+import { Course_entity } from '../entity/course.entity';
 
 @Injectable()
 export class MaterialService {
@@ -16,7 +16,7 @@ export class MaterialService {
     private readonly materialRepository: Repository<Material_Entity>,
   ) {}
 
-  async creatematerial(body: MaterialDto) {
+  async createMaterial(body: MaterialDto) {
     try {
       const create = await this.materialRepository.save(body);
       return { success: true, message: create };
