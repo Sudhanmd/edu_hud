@@ -8,15 +8,18 @@ import {
   Put,
 } from '@nestjs/common';
 import { EnrollementService } from './enrollement.service';
-import { Enrollment_entity } from 'src/entity/enrollment.entity';
-import { enrollementDto, UpdateEnrollDto } from './enrollement.dto';
+import { EnrollementDto, UpdateEnrollDto } from './enrollement.dto';
 
 @Controller('enroll')
 export class EnrollementController {
   constructor(private readonly enrollementServices: EnrollementService) {}
 
   @Post('addEnroll')
-  async createEnrollement(@Body() body: enrollementDto) {
+  async createEnrollement(
+    @Body() body: EnrollementDto,
+    // @Param() userId: string,
+    // @Param() courseId: string,
+  ) {
     return await this.enrollementServices.createEnrollement(body);
   }
 
@@ -36,10 +39,9 @@ export class EnrollementController {
   }
 
   @Put('updateEnrollByEnrollID/:enrollID')
-  async updateEnrollmentByID(
+  async updateEnrollmentById(
     @Param('enrollID') id: string,
-    @Body() body: UpdateEnrollDto,
-  ) {
+    @Body() body: UpdateEnrollDto) {
     return await this.enrollementServices.updateEnrollmentById(id, body);
   }
 
