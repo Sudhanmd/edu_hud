@@ -4,9 +4,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Enrollment_entity } from 'src/entity/enrollment.entity';
+import { Enrollment_entity } from '../entity/enrollment.entity';
 import { Repository } from 'typeorm';
-import { enrollementDto, UpdateEnrollDto } from './enrollement.dto';
+import { EnrollementDto, UpdateEnrollDto } from './enrollement.dto';
 
 @Injectable()
 export class EnrollementService {
@@ -15,18 +15,19 @@ export class EnrollementService {
     private readonly enrollementRepository: Repository<Enrollment_entity>,
   ) {}
 
-  async createEnrollement(body: enrollementDto) {
+  async createEnrollement(body: EnrollementDto) {
     try {
-      body['status'] = body.status.toUpperCase();
+      // body['status'] = body.status.toUpperCase();
       const create = await this.enrollementRepository.save(body);
       return { success: true, message: create };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message );
     }
   }
+
   async getEnrollCourseByUserId(user: string) {
     try {
-      const checkUserId = await this.enrollementRepository.findOne({
+      const checkUserId = await this.enrollementRepository.find({
         where: { user: { id: user } },
         relations: ['course'],
       });
@@ -66,8 +67,8 @@ export class EnrollementService {
     try {
       const getByid = await this.enrollementRepository.find({ where: { id } });
       if (!getByid) throw new NotFoundException(`given ${id} is not found`);
-      const update = await this.enrollementRepository.update(id, body);
-      return { success: true, message: update };
+      const update = await this.enrollementRepository.update(id,body);
+     return {success: true , message: update}
     } catch (error) {
       throw new BadRequestException(error.message || error);
     }
