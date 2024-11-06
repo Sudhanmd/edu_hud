@@ -8,12 +8,17 @@ export class EnquiryDto {
   @IsString()
   message: string;
 
+  //   @IsNotEmpty()
+  //   @IsString()
+  //   @IsEnum({
+  //     type: 'enum',
+  //     enum: ['open', 'close', 'inprocesses'],
+  //   })
+  //   status: string;
+
   @IsNotEmpty()
-  @IsEnum({
-    type: 'enum',
-    enum: ['open', 'close', 'inprocesses'],
-    message: 'this fied should be,open | close | inprocesses',
-  })
+  @IsString()
+  @IsEnum(['open', 'close', 'inprocesses'])
   status: string;
 
   @IsNotEmpty()
@@ -37,5 +42,4 @@ export class FilterDto {
   @IsNotEmpty()
   @IsString()
   id: string;
-
 }

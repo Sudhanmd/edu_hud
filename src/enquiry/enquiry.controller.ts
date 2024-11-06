@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { EnquiryService } from './enquiry.service';
 import { EnquiryDto, FilterDto, UpdateEnquiryDto } from './enquiry.dot';
-import { Filter } from 'typeorm';
 
 @Controller('enquiry')
 export class EnquiryController {
@@ -27,26 +26,26 @@ export class EnquiryController {
   }
 
   @Get('getEnquiryByEnquiryID')
-  async getEnquriesEnquiryId(@Query() query: FilterDto) {
-    return await this.enquiryServices.getEnquriesEnquiryId(query.id);
+  async getEnquiryByEnquiryID(@Query() query: FilterDto) {
+    return await this.enquiryServices.getEnquiryByEnquiryID(query.id);
   }
 
   @Get('getEnquiryByUserId')
-  async getEnquriesUserId(@Query() query: FilterDto) {
+  async getEnquriesByUserId(@Query() query: FilterDto) {
     return await this.enquiryServices.getEnquriesByUserId(query.id);
   }
 
   @Get('getEnquiryByCourseId/:courseId')
   async getEnquriesCourseId(@Param('courseId') id: string) {
-    return await this.enquiryServices.getEnquriesByCourseID(id);
+    return await this.enquiryServices.getEnquriesCourseId(id);
   }
 
-  @Put('updateEnrollByEnrollID/:enrollID')
-  async updateAllEnquriesById(
-    @Param('id') id: string,
+  @Put('updateEnquiryByEnquiryID/:enrollID')
+  async updateEnquiryByEnquiryID(
+    @Param('enrollID') id: string,
     @Body() body: UpdateEnquiryDto,
   ) {
-    return await this.enquiryServices.updateAllEnquriesById(id, body);
+    return await this.enquiryServices.updateEnquiryByEnquiryID(id, body);
   }
 
   @Delete('deleteEnrollByEnrollID/:enrollID')

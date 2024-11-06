@@ -18,7 +18,7 @@ export class EnquiryService {
   async createEnquiry(body: EnquiryDto) {
     try {
       const create = await this.enrollementRepository.save(body);
-      return { success: true, message: create };
+      return { success: true, Enquiry: create };
     } catch (error) {
       throw new BadRequestException(error.message);
     }
@@ -35,7 +35,7 @@ export class EnquiryService {
     }
   }
 
-  async getEnquriesEnquiryId(id: string) {
+  async getEnquiryByEnquiryID(id: string) {
     try {
       const enquiry = await this.enrollementRepository.findOne({
         where: { id },
@@ -63,7 +63,7 @@ export class EnquiryService {
     }
   }
 
-  async getEnquriesByCourseID(id: string) {
+  async getEnquriesCourseId(id: string) {
     try {
       const enquiry = await this.enrollementRepository.find({
         where: { course: { id } },
@@ -76,18 +76,20 @@ export class EnquiryService {
     }
   }
 
-  async updateAllEnquriesById(id: string, body: UpdateEnquiryDto) {
+  async updateEnquiryByEnquiryID(id: string, body: UpdateEnquiryDto) {
     try {
+      console.info(body)
       const enquiry = await this.enrollementRepository.findOne({
         where: { id },
       });
       if (!enquiry) throw new NotFoundException(`given ${id} is not found`);
       const updatebody = await this.enrollementRepository.update(id, body);
-      return { success: true, message: updatebody };
+      return { success: true, Enquiry: updatebody };
     } catch (error) {
       throw new BadRequestException(error.message);
     }
   }
+  
   async deleteEnquiryById(id: string) {
     try {
       const enquiry = await this.enrollementRepository.delete(id);
