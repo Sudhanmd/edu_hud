@@ -15,8 +15,8 @@ export class MaterialController {
   constructor(private readonly materialServices: MaterialService) {}
 
   @Post('addMaterial')
-  async creatematerial(@Body() body: MaterialDto) {
-    return await this.materialServices.creatematerial(body);
+  async createMaterial(@Body() body: MaterialDto) {
+    return await this.materialServices.createMaterial(body);
   }
 
   @Get('getAllMaterial')
