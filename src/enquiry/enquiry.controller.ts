@@ -6,38 +6,50 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { EnquiryService } from './enquiry.service';
-import { Enquiry_entity } from 'src/entity/enquiry.entity';
+import { EnquiryDto, FilterDto, UpdateEnquiryDto } from './enquiry.dot';
+import { Filter } from 'typeorm';
 
 @Controller('enquiry')
 export class EnquiryController {
   constructor(private readonly enquiryServices: EnquiryService) {}
 
-  @Post('addenquiry')
-  async createEnquiry(@Body() body: Enquiry_entity) {
+  @Post('addEnquiry')
+  async createEnquiry(@Body() body: EnquiryDto) {
     return await this.enquiryServices.createEnquiry(body);
   }
 
-  @Get('getAllEnrollment')
+  @Get('getAllEnquiry')
   async getAllEnquiries() {
     return await this.enquiryServices.getAllEnquiries();
   }
 
-  @Get()
-  async getAllEnquriesById(@Param('id') id: string) {
-    return await this.enquiryServices.getAllEnquriesById(id);
+  @Get('getEnquiryByEnquiryID')
+  async getEnquriesEnquiryId(@Query() query: FilterDto) {
+    return await this.enquiryServices.getEnquriesEnquiryId(query.id);
   }
 
-  @Put()
+  @Get('getEnquiryByUserId')
+  async getEnquriesUserId(@Query() query: FilterDto) {
+    return await this.enquiryServices.getEnquriesByUserId(query.id);
+  }
+
+  @Get('getEnquiryByCourseId/:courseId')
+  async getEnquriesCourseId(@Param('courseId') id: string) {
+    return await this.enquiryServices.getEnquriesByCourseID(id);
+  }
+
+  @Put('updateEnrollByEnrollID/:enrollID')
   async updateAllEnquriesById(
     @Param('id') id: string,
-    @Body() body: Enquiry_entity,
+    @Body() body: UpdateEnquiryDto,
   ) {
     return await this.enquiryServices.updateAllEnquriesById(id, body);
   }
 
-  @Delete()
+  @Delete('deleteEnrollByEnrollID/:enrollID')
   async deleteEnquiryById(@Param('Id') id: string) {
     return await this.enquiryServices.deleteEnquiryById(id);
   }

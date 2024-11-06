@@ -4,8 +4,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Enquiry_entity } from 'src/entity/enquiry.entity';
-import { Repository } from 'typeorm';
+import { Enquiry_entity } from '../entity/enquiry.entity';
+import { ILike, Repository } from 'typeorm';
+import { EnquiryDto, UpdateEnquiryDto } from './enquiry.dot';
 
 @Injectable()
 export class EnquiryService {
@@ -14,54 +15,88 @@ export class EnquiryService {
     private readonly enrollementRepository: Repository<Enquiry_entity>,
   ) {}
 
-  async createEnquiry(body: Enquiry_entity) {
+  async createEnquiry(body: EnquiryDto) {
     try {
       const create = await this.enrollementRepository.save(body);
       return { success: true, message: create };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message);
     }
   }
 
   async getAllEnquiries() {
     try {
-      const getall = await this.enrollementRepository.find();
-      return { message: getall };
+      const enquiry = await this.enrollementRepository.find({
+        relations: ['user', 'course'],
+      });
+      return { success: true, Enquiry: enquiry };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message);
     }
   }
 
-  async getAllEnquriesById(id: string) {
+  async getEnquriesEnquiryId(id: string) {
     try {
-      const getByid = await this.enrollementRepository.find({ where: { id } });
-      if (!getByid) throw new NotFoundException(`given ${id} is not found`);
-      return getByid;
+      const enquiry = await this.enrollementRepository.findOne({
+        where: { id },
+        relations: ['user', 'course'],
+      });
+      if (!enquiry) {
+        throw new NotFoundException(`given ${id} is not found`);
+      }
+      return { success: true, Enquiry: enquiry };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message);
     }
   }
-  async updateAllEnquriesById(id: string, body: Enquiry_entity) {
+
+  async getEnquriesByUserId(id: string) {
     try {
-      const checkID = await this.enrollementRepository.findOne({
+      const enquiry = await this.enrollementRepository.find({
+        where: { user: { id } },
+        relations: ['user', 'course'],
+      });
+      if (!enquiry) throw new NotFoundException(`given ${id} is not found`);
+      return { success: true, Enquiry: enquiry };
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  async getEnquriesByCourseID(id: string) {
+    try {
+      const enquiry = await this.enrollementRepository.find({
+        where: { course: { id } },
+        relations: ['user','course'],
+      });
+      if (!enquiry) throw new NotFoundException(`given ${id} is not found`);
+      return { success: true, Enquiry: enquiry };
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  async updateAllEnquriesById(id: string, body: UpdateEnquiryDto) {
+    try {
+      const enquiry = await this.enrollementRepository.findOne({
         where: { id },
       });
-      if (!checkID) throw new NotFoundException(`given ${id} is not found`);
+      if (!enquiry) throw new NotFoundException(`given ${id} is not found`);
       const updatebody = await this.enrollementRepository.update(id, body);
       return { success: true, message: updatebody };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message);
     }
   }
   async deleteEnquiryById(id: string) {
     try {
-      const checkId = await this.enrollementRepository.delete(id);
-      if (checkId.affected === 0) {
+      const enquiry = await this.enrollementRepository.delete(id);
+      if (enquiry.affected === 0) {
         throw new NotFoundException(`Given ${id} is not found`);
       }
-      return { message: `${id} is deleted successfully` };
+      return { message: `deleted successfully` };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message);
     }
   }
 }
