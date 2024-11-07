@@ -41,5 +41,6 @@ describe('UserService', () => {
   });
   it('should create a new user', async () => {
     jest.spyOn(userRepository, 'findOne').mockResolvedValueOnce(null);
-    jest.spyOn(userRepository, 'save').mockResolvedValueOnce(User_entity);
-});});
+    // jest.spyOn(userRepository, 'save').mockResolvedValueOnce(User_entity);
+  });
+});
