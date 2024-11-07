@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 
-const mockservice = {
+const userMockService = {
   createUser: jest.fn(),
   getAllUsers: jest.fn(),
   searchUsers: jest.fn(),
@@ -21,7 +21,7 @@ describe('UserController', () => {
       providers: [
         {
           provide: UserService,
-          useValue: mockservice,
+          useValue: userMockService,
         },
       ],
     }).compile();
