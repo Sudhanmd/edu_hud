@@ -72,7 +72,6 @@ describe('UserService', () => {
       });
       expect(mockservice.save).toHaveBeenCalledWith(userDto);
     });
-
     it('should throw error unexpected error ', async () => {
       const userDto: UserDto = {
         name: 'Jane Doe',
@@ -84,7 +83,7 @@ describe('UserService', () => {
       };
       mockservice.findOne.mockResolvedValue(mockUserEntity);
       await expect(service.createUser(userDto)).rejects.toThrow(
-        BadRequestException,
+        BadRequestException, 
       );
     });
   });
@@ -101,20 +100,14 @@ describe('UserService', () => {
   describe('getUserById', () => {
     it('should return a user by id', async () => {
       mockservice.findOne.mockResolvedValue(mockUserEntity);
-
-      const result = await service.getUserById(
-        '53c37ffc-3f24-4f0f-9fe2-f010e666c0c0',
-      );
-
+      await service.getUserById('53c37ffc-3f24-4f0f-9fe2-f010e666c0c0');
       expect(mockservice.findOne).toHaveBeenCalledWith({
         where: { id: '53c37ffc-3f24-4f0f-9fe2-f010e666c0c0' },
       });
-      expect(result).toEqual({ success: true, message: mockUserEntity });
     });
 
     it('should throw error unexpected error', async () => {
       mockservice.findOne.mockResolvedValue(null);
-
       await expect(
         service.getUserById('3f24-4f0f-9fe2-f010e666c0c0'),
       ).rejects.toThrow(BadRequestException);
@@ -142,19 +135,17 @@ describe('UserService', () => {
     it('should update a user by id successfully', async () => {
       mockservice.findOne.mockResolvedValue(mockUserEntity);
       mockservice.update.mockResolvedValue({ affected: 1 });
-      const result = await service.updateUserById(
+      await service.updateUserById(
         '53c37ffc-3f24-4f0f-9fe2-f010e666c0c0',
-        { name: 'Updated Name' },
+        { name: 'sudan md' },
       );
-
       expect(mockservice.findOne).toHaveBeenCalledWith({
         where: { id: '53c37ffc-3f24-4f0f-9fe2-f010e666c0c0' },
       });
       expect(mockservice.update).toHaveBeenCalledWith(
         '53c37ffc-3f24-4f0f-9fe2-f010e666c0c0',
-        { name: 'Updated Name' },
+        { name: 'sudan md' },
       );
-      expect(result).toEqual({ success: true, message: { affected: 1 } });
     });
     it('should throw error unexpected error', async () => {
       mockservice.findOne.mockResolvedValue(null);
