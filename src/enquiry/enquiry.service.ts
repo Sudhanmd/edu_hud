@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Enquiry_entity } from '../entity/enquiry.entity';
-import { ILike, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { EnquiryDto, UpdateEnquiryDto } from './enquiry.dot';
 
 @Injectable()

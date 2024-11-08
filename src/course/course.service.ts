@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Course_entity } from '../entity/course.entity';
 import { Repository } from 'typeorm';
 import { updateCourseDto } from './course.dto';
+import { throwError } from 'rxjs';
 
 @Injectable()
 export class CourseService {
@@ -21,18 +22,14 @@ export class CourseService {
       const createuser = await this.courseRepository.save(body);
       return { success: true, message: createuser };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message);
     }
   }
 
   //get all users
   async getAllCourse() {
-    try {
-      const getcourse = await this.courseRepository.find();
-      return getcourse;
-    } catch (error) {
-      throw new BadRequestException(error.message || error);
-    }
+    const getcourse = await this.courseRepository.find();
+    return getcourse;
   }
 
   //get course by courseId
@@ -40,9 +37,9 @@ export class CourseService {
     try {
       const getcourse = await this.courseRepository.find({ where: { id } });
       if (!getcourse) throw new NotFoundException(`given ${id} is not found`);
-      return getcourse;
+      return { success: true, message: getcourse };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message);
     }
   }
 
@@ -53,24 +50,24 @@ export class CourseService {
         where: { user: { id } },
         relations: ['user'],
       });
+      if (!getcourse) throw new NotFoundException(`given ${id} is not found`);
       return { success: true, message: getcourse };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message);
     }
   }
 
   //update course by courseId
   async updateCourseById(id: string, body: updateCourseDto) {
     try {
-      const checkCourseID = await this.courseRepository.find({
+      const course = await this.courseRepository.find({
         where: { id },
       });
-      if (!checkCourseID)
-        throw new NotFoundException(`given ${id} is not found`);
-      const updateCouseId = await this.courseRepository.update(id, body);
-      return { success: true, message: 'successfully updated' };
+      if (!course) throw new NotFoundException(`given ${id} is not found`);
+      const updatecourse = await this.courseRepository.update(id, body);
+      return { success: true, message: updatecourse };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message);
     }
   }
 
@@ -83,7 +80,7 @@ export class CourseService {
       }
       return { message: `${id} is deleted successfully` };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message);
     }
   }
 }
