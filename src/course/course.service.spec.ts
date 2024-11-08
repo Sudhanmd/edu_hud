@@ -4,8 +4,7 @@ import { Repository } from 'typeorm';
 import { Course_entity } from '../entity/course.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { CourseDto } from './course.dto';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { mock } from 'node:test';
+import { BadRequestException } from '@nestjs/common';
 
 const mockCourseEntity = {
   id: 'ffc85d5a-3b08-4d3a-963d-8661e5a776fa',
