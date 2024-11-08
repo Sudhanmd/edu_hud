@@ -20,6 +20,10 @@ export class CourseDto{
     @IsNotEmpty()
     @IsString()
     category : string;
+
+    @IsNotEmpty()
+    @IsString()
+    level : string;
 }
 
 export class updateCourseDto{

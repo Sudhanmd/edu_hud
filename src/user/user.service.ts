@@ -22,14 +22,14 @@ export class UserService {
         where: [{ email: body.email }],
       });
       if (checkuser) {
-        throw new BadRequestException('Use different Email');
+        throw new NotFoundException('Use different Email');
       }
       body['role'] = body.role.toUpperCase();
       console.info(body);
       const createuser = await this.userRepository.save(body);
       return { success: true, message: createuser };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message);
     }
   }
 
@@ -46,12 +46,13 @@ export class UserService {
       const getusers = await this.userRepository.find({
         where: { name: ILike(`%${name}%`) },
       });
-      if (!getusers) throw new NotFoundException('NO Users on such value');
+      if (!getusers || getusers.length === 0)  throw new NotFoundException('NO Users on such value');
       return getusers;
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message);
     }
   }
+  
 
   //getusers by userId
   async getUserById(id: string) {
@@ -64,7 +65,7 @@ export class UserService {
       //return value with success
       return { success: true, message: userById };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message );
     }
   }
 
@@ -80,7 +81,7 @@ export class UserService {
       const updateuserbyid = await this.userRepository.update(id, body);
       return { success: true, message: updateuserbyid };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message );
     }
   }
 
@@ -92,7 +93,7 @@ export class UserService {
       }
       return { message: `${id} is deleted successfully` };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message );
     }
   }
 }
