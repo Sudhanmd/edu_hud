@@ -26,13 +26,8 @@ export class MaterialService {
   }
 
   async getAllMaterial() {
-    try {
       const getall = await this.materialRepository.find();
-      if (!getall) throw new NotFoundException(`No Material Found`);
       return getall;
-    } catch (error) {
-      throw new BadRequestException(error.message || error);
-    }
   }
 
   async getMaterialById(id: string) {
