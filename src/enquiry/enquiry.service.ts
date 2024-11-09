@@ -25,14 +25,10 @@ export class EnquiryService {
   }
 
   async getAllEnquiries() {
-    try {
       const enquiry = await this.enrollementRepository.find({
         relations: ['user', 'course'],
       });
       return { success: true, Enquiry: enquiry };
-    } catch (error) {
-      throw new BadRequestException(error.message);
-    }
   }
 
   async getEnquiryByEnquiryID(id: string) {
