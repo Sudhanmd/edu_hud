@@ -78,13 +78,44 @@ describe('EnquiryService', () => {
         BadRequestException,
       );
     });
-
-    describe('getAllEnquiries',()=>{
-      it('should show all the enquiries',async()=>{
-        mockservice.find.mockResolvedValue([mockEnquiryEntity]);
-        await service.getAllEnquiries();
-        expect(mockservice.find).toHaveBeenCalled();
-      })
-    })
   });
+
+  describe('getAllEnquiries', () => {
+    it('should show all the enquiries', async () => {
+      mockservice.find.mockResolvedValue([mockEnquiryEntity]);
+      await service.getAllEnquiries();
+      expect(mockservice.find).toHaveBeenCalled();
+    });
+  });
+  describe('getEnquiryByEnquiryID', () => {
+    it('successfully return the enquiry by the enquiry id', async () => {
+      mockservice.findOne.mockResolvedValue(mockEnquiryEntity);
+      await service.getEnquiryByEnquiryID(
+        'fb70c2f5-5061-43b2-954f-23d52687d024',
+      );
+      expect(mockservice.findOne).toHaveBeenCalledWith({
+        where: { id: 'fb70c2f5-5061-43b2-954f-23d52687d024' },
+        relations: ['user', 'course'],
+      });
+    });
+    it('should throw the unexpected error', async () => {
+      mockservice.findOne.mockResolvedValue(null);
+      await expect(
+        service.getEnquiryByEnquiryID('3f24-4f0f-9fe2-f010e666c0c0'),
+      ).rejects.toThrow(BadRequestException);
+    });
+  });
+
+  describe('getEnquriesByUserId', () => {
+    it('should show the enquiry by the user Id', async () => {
+      mockservice.find.mockResolvedValue(mockEnquiryEntity);
+      await service.getEnquriesByUserId('fb70c2f5-5061-43b2-954f-23d52687d024');
+      expect(mockservice.find).toHaveBeenCalledWith({
+        where: { user:{id: 'fb70c2f5-5061-43b2-954f-23d52687d024' }},
+        relations: ['user', 'course'],
+      });
+    });
+  });
+
+
 });
