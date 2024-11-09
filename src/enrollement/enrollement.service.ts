@@ -21,7 +21,7 @@ export class EnrollementService {
       const create = await this.enrollementRepository.save(body);
       return { success: true, message: create };
     } catch (error) {
-      throw new BadRequestException(error.message );
+      throw new BadRequestException(error.message);
     }
   }
 
@@ -35,19 +35,15 @@ export class EnrollementService {
         throw new NotFoundException(`The given UserId is ${user} not found`);
       return { success: true, Message: checkUserId };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message);
     }
   }
 
   async getAll() {
-    try {
-      const getAllEnroll = await this.enrollementRepository.find({
-        relations: ['user', 'course'],
-      });
-      return { success: true, Message: getAllEnroll };
-    } catch (error) {
-      throw new BadRequestException(error.message || error);
-    }
+    const getAllEnroll = await this.enrollementRepository.find({
+      relations: ['user', 'course'],
+    });
+    return { success: true, Message: getAllEnroll };
   }
 
   async getEnrollmentById(id: string) {
@@ -59,7 +55,7 @@ export class EnrollementService {
       if (!getByid) throw new NotFoundException(`given ${id} is not found`);
       return { success: true, message: getByid };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message);
     }
   }
 
@@ -67,10 +63,10 @@ export class EnrollementService {
     try {
       const getByid = await this.enrollementRepository.find({ where: { id } });
       if (!getByid) throw new NotFoundException(`given ${id} is not found`);
-      const update = await this.enrollementRepository.update(id,body);
-     return {success: true , message: update}
+      const update = await this.enrollementRepository.update(id, body);
+      return { success: true, message: update };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message);
     }
   }
 
@@ -82,7 +78,7 @@ export class EnrollementService {
       }
       return { sucess: true, message: `${id} is deleted successfully` };
     } catch (error) {
-      throw new BadRequestException(error.message || error);
+      throw new BadRequestException(error.message);
     }
   }
 }
