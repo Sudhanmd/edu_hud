@@ -111,11 +111,75 @@ describe('EnquiryService', () => {
       mockservice.find.mockResolvedValue(mockEnquiryEntity);
       await service.getEnquriesByUserId('fb70c2f5-5061-43b2-954f-23d52687d024');
       expect(mockservice.find).toHaveBeenCalledWith({
-        where: { user:{id: 'fb70c2f5-5061-43b2-954f-23d52687d024' }},
+        where: { user: { id: 'fb70c2f5-5061-43b2-954f-23d52687d024' } },
         relations: ['user', 'course'],
       });
     });
+    it('should throw the unexpected error', async () => {
+      mockservice.find.mockResolvedValue(null);
+      await expect(
+        service.getEnquriesByUserId('fb70c2f5-5061-43b2-954f-23d52687d024'),
+      ).rejects.toThrow(BadRequestException);
+    });
   });
 
+  describe('getEnquriesCourseId', () => {
+    it('should show the enquiry by the course Id', async () => {
+      mockservice.find.mockResolvedValue(mockEnquiryEntity);
+      await service.getEnquriesCourseId('fb70c2f5-5061-43b2-954f-23d52687d024');
+      expect(mockservice.find).toHaveBeenCalledWith({
+        where: { course: { id: 'fb70c2f5-5061-43b2-954f-23d52687d024' } },
+        relations: ['user', 'course'],
+      });
+    });
+    it('should throw the unexpected error', async () => {
+      mockservice.find.mockResolvedValue(null);
+      await expect(
+        service.getEnquriesCourseId('fb70c2f5-5061-43b2-954f-23d52687d024'),
+      ).rejects.toThrow(BadRequestException);
+    });
+  });
 
+  describe('updateEnquiryByEnquiryID', () => {
+    it('should successfully update a course by id ', async () => {
+      mockservice.findOne.mockResolvedValue(mockEnquiryEntity);
+      mockservice.update.mockResolvedValue({ affected: 1 });
+      await service.updateEnquiryByEnquiryID(
+        '53c37ffc-3f24-4f0f-9fe2-f010e666c0c0',
+        {
+          status: 'open',
+          response: 'lsjdflie',
+        },
+      );
+      expect(mockservice.update).toHaveBeenCalledWith(
+        '53c37ffc-3f24-4f0f-9fe2-f010e666c0c0',
+        { status: 'open', response: 'lsjdflie' },
+      );
+    });
+    it('should throw error unexpected error', async () => {
+      mockservice.findOne.mockResolvedValue(null);
+      await expect(
+        service.updateEnquiryByEnquiryID(
+          '3cd11941-53bb-4764-a9ba-64fd99c94907',
+          { status: 'open', response: 'lsjdflie' },
+        ),
+      ).rejects.toThrow(BadRequestException);
+    });
+  });
+
+  describe('deleteEnquiryById', () => {
+    it('successfully delete a enquiry by id ', async () => {
+      mockservice.delete.mockResolvedValue({ affected: 1 });
+      await service.deleteEnquiryById('3cd11941-53bb-4764-a9ba-64fd99c94907');
+      expect(mockservice.delete).toHaveBeenCalledWith(
+        '3cd11941-53bb-4764-a9ba-64fd99c94907',
+      );
+    });
+    it('should throw error unexpected error', async () => {
+      mockservice.delete.mockResolvedValue({ affected: 0 });
+      await expect(
+        service.deleteEnquiryById('3cd11941-53bb-4764-a9ba64fd99c94907'),
+      ).rejects.toThrow(BadRequestException);
+    });
+  });
 });
