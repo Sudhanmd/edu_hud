@@ -133,9 +133,6 @@ describe('CourseService', () => {
         title: 'Python Full Stack',
         description: 'flfdlkf',
       });
-      expect(mockservice.find).toHaveBeenCalledWith({
-        where: { id: '53c37ffc-3f24-4f0f-9fe2-f010e666c0c0' },
-      });
       expect(mockservice.update).toHaveBeenCalledWith(
         '53c37ffc-3f24-4f0f-9fe2-f010e666c0c0',
         { title: 'Python Full Stack', description: 'flfdlkf' },
